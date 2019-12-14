@@ -9,7 +9,12 @@ export const mutations = {
   ADD_TO_FAVORITES(state, payload) {
     state.favorites.push({ ...payload.data, weirdness: payload.weirdness });
   },
-  REMOVE_FROM_FAVORIRES() {}
+  REMOVE_FROM_FAVORIRES(state, payload) {
+    const indexInFavorites = state.favorites.findIndex(
+      (x) => x.id === payload.id
+    );
+    state.favorites.splice(indexInFavorites, 1);
+  }
 };
 export const getters = {
   total_favorites: (state) => state.favorites.length

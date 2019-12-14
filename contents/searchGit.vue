@@ -182,7 +182,7 @@ export default {
         });
         this.$vs.notify({
           title: 'Success!',
-          text: 'Added to my favorites',
+          text: this.search_active.title + ' was added to your favorites',
           color: 'success'
         });
         this.search = '';
@@ -193,7 +193,7 @@ export default {
           this.show_message = true;
           setTimeout(() => {
             this.show_message = false;
-          }, 5000);
+          }, 6000);
         }
       }
     }

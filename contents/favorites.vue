@@ -28,6 +28,7 @@
             <div slot="footer">
               <vs-row vs-justify="flex-end">
                 <vs-button
+                  @click="removeFromFavorites(item)"
                   icon="close"
                   type="filled"
                   color="danger"
@@ -47,6 +48,16 @@ export default {
   data: () => ({}),
   computed: {
     ...mapState(['favorites'])
+  },
+  methods: {
+    removeFromFavorites(payload) {
+      this.$store.commit('REMOVE_FROM_FAVORIRES', payload);
+      this.$vs.notify({
+        title: 'Success!',
+        text: payload.title + ' removed from favorites',
+        color: 'success'
+      });
+    }
   }
 };
 </script>
