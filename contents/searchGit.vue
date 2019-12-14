@@ -55,10 +55,10 @@
             <div slot="footer">
               <vs-row vs-justify="flex-end">
                 <vs-button
-                  @click="search = ''"
-                  :icon="true ? 'favorite_border' : 'search'"
+                  @click="addToFavorite"
+                  icon="thumb_up"
                   type="filled"
-                  color="danger"
+                  color="primary"
                 ></vs-button>
               </vs-row>
             </div>
@@ -111,7 +111,7 @@ export default {
     slider_active: 0
   }),
   computed: {
-    ...mapState(['empty_text'])
+    ...mapState(['empty_text', 'favorites'])
   },
   watch: {
     slider_active() {
@@ -150,6 +150,30 @@ export default {
       this.slider_active = 0;
       this.search_list = [];
       this.search_active = {};
+    },
+    addToFavorite() {
+      const itAlreadyExists = this.favorites.filter(
+        (x) => x.id === this.search_active.id
+      );
+      if (itAlreadyExists.length) {
+        this.$vs.notify({
+          title: 'Warning!',
+          text: 'It is already added in your favorites ',
+          color: 'warning'
+        });
+      } else {
+        this.$store.commit('ADD_TO_FAVORITES', {
+          data: this.search_active,
+          weirdness: this.slider_active
+        });
+        this.$vs.notify({
+          title: 'Success!',
+          text: 'Added to my favorites',
+          color: 'success'
+        });
+        this.search = '';
+        this.resetInitValues();
+      }
     }
   }
 };
