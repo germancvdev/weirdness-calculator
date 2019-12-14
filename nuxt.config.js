@@ -4,14 +4,14 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Weirdness Calculator',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'Weirdness Calculator'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -62,7 +62,7 @@ export default {
       short_name: 'Weirdness Calculator',
       display: 'standalone',
       background_color: '#fff',
-      theme_color: '#e9cb62',
+      theme_color: '#CC003F',
       description: process.env.description
     }
   },

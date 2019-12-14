@@ -1,7 +1,7 @@
 <template>
   <vs-row>
-    <vs-col class="ma-1">
-      <span class="title">YOUR LIKES GIFS</span>
+    <vs-col class="ma-1" vs-type="flex" vs-justify="center" vs-align="center">
+      <span class="title text-xs-center">YOUR LIKES GIFS</span>
     </vs-col>
     <vs-col vs-type="flex" vs-justify="center" vs-align="center">
       <vs-row>
@@ -39,15 +39,31 @@
         </vs-col>
       </vs-row>
     </vs-col>
+
+    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="mt-2">
+      <vs-button
+        @click="$router.push('/results')"
+        :disabled="total_favorites < 5"
+        color="primary"
+        type="filled"
+      >
+        CALCULATE MY WEIRDNESS SCORE</vs-button
+      >
+    </vs-col>
+    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="mt-2">
+      <span v-if="total_favorites < 5">{{ score_message_count }}</span>
+      <span v-else>{{ score_message }}</span>
+    </vs-col>
   </vs-row>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 export default {
   data: () => ({}),
   computed: {
-    ...mapState(['favorites'])
+    ...mapState(['favorites', 'score_message']),
+    ...mapGetters(['total_favorites', 'score_message_count'])
   },
   methods: {
     removeFromFavorites(payload) {
