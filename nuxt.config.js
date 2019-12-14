@@ -55,7 +55,9 @@ export default {
   axios: {
     baseURL: 'https://api.giphy.com/v1/gifs/'
   },
-
+  generate: {
+    routes: ['404']
+  },
   pwa: {
     manifest: {
       name: 'Weirdness Calculator',
