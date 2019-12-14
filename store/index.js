@@ -1,8 +1,6 @@
 export const state = () => ({
-  counter: 0,
-  storage: {
-    counter: 0
-  }
+  title: 'Weirdness Calculator',
+  empty_text: 'No results were found with the term entered, try another term.'
 });
 
 export const mutations = {};

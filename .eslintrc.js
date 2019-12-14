@@ -27,17 +27,17 @@ module.exports = {
     indent: 2,
     'key-spacing': 2,
     'max-len': [
-      'error',
+      1,
       {
         ignoreStrings: true,
         ignoreUrls: true,
         ignoreComments: true,
         ignoreTemplateLiterals: true,
-        code: 80
+        code: 100
       }
     ],
     'max-lines': ['error', { skipComments: true, max: 300 }],
-    'max-lines-per-function': ['error', 20],
+    'max-lines-per-function': ['error', 50],
     'no-trailing-spaces': 2,
     'no-underscore-dangle': 2,
     quotes: [2, 'single'],

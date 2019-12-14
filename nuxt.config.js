@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  mode: 'universal',
   /*
    ** Headers of the page
    */
@@ -23,11 +23,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/css/main.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/vuesax.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -46,20 +46,14 @@ export default {
     // Doc: https://pwa.nuxtjs.org/
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    // Doc: https://github.com/nuxt-community/universal-storage-module
-    '@nuxtjs/universal-storage'
+    '@nuxtjs/dotenv'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
-
-  storage: {
-    vuex: {
-      namespace: 'storage'
-    }
+  axios: {
+    baseURL: 'https://api.giphy.com/v1/gifs/'
   },
 
   pwa: {
