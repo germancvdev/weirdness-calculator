@@ -20,6 +20,7 @@
       vs-align="flex-end"
     >
       <vs-input
+        ref="search"
         @keyup.enter="serachGit"
         v-model="search"
         label-placeholder="Search item"
@@ -35,6 +36,17 @@
       >
         <span>Search</span>
       </vs-button>
+    </vs-col>
+    <vs-col vs-type="flex" vs-justify="center" vs-align="center">
+      <vs-alert
+        :active.sync="show_message"
+        color="primary"
+        icon="info"
+        closable
+        class="empty__alert"
+      >
+        <span class="body-2">{{ search_message }}</span>
+      </vs-alert>
     </vs-col>
     <vs-divider color="rgba(0,0,0,.3)">YOUR RESULT</vs-divider>
     <vs-col vs-w="12">
@@ -101,17 +113,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 export default {
   data: () => ({
     search: '',
     search_active: {},
     search_list: [],
     empty_message: false,
-    slider_active: 0
+    slider_active: 0,
+    show_message: false
   }),
   computed: {
-    ...mapState(['empty_text', 'favorites'])
+    ...mapState(['empty_text', 'favorites', 'search_message']),
+    ...mapGetters(['total_favorites'])
   },
   watch: {
     slider_active() {
@@ -172,7 +186,15 @@ export default {
           color: 'success'
         });
         this.search = '';
+
         this.resetInitValues();
+        this.$refs.search.focusInput();
+        if (this.total_favorites < 5) {
+          this.show_message = true;
+          setTimeout(() => {
+            this.show_message = false;
+          }, 5000);
+        }
       }
     }
   }
