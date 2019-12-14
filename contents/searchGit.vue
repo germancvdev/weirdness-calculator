@@ -12,7 +12,13 @@
       </p>
     </vs-col>
 
-    <vs-col class="pa-2" vs-type="flex" vs-justify="center" vs-align="flex-end">
+    <!-- Search gifs by term entered -->
+    <vs-col
+      class="pa-2 mt-1"
+      vs-type="flex"
+      vs-justify="center"
+      vs-align="flex-end"
+    >
       <vs-input
         @keyup.enter="serachGit"
         v-model="search"
@@ -30,6 +36,7 @@
         <span>Search</span>
       </vs-button>
     </vs-col>
+    <vs-divider color="rgba(0,0,0,.3)">YOUR RESULT</vs-divider>
     <vs-col vs-w="12">
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center">
@@ -70,6 +77,26 @@
         </vs-col>
       </vs-row>
     </vs-col>
+    <!-- change the weirdness by moving a slider -->
+    <vs-col v-if="search_list.length" class="slider__content pa-4">
+      <vs-row>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center">
+          <vs-slider
+            :disabled="!search_list.length"
+            :min="0"
+            :max="10"
+            :value="slider_active"
+            v-model="slider_active"
+            color="primary"
+          />
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="flex-start">
+          <strong :class="search_list.length ? 'primary-text' : 'caption'"
+            >Weirdness : {{ slider_active }}</strong
+          >
+        </vs-col>
+      </vs-row>
+    </vs-col>
   </vs-row>
 </template>
 
@@ -80,15 +107,22 @@ export default {
     search: '',
     search_active: {},
     search_list: [],
-    empty_message: false
+    empty_message: false,
+    slider_active: 0
   }),
   computed: {
     ...mapState(['empty_text'])
   },
+  watch: {
+    slider_active() {
+      // change the weirdness by moving a slider
+      this.search_active = { ...this.search_list[this.slider_active] };
+    }
+  },
   methods: {
     async serachGit() {
-      this.search_list = [];
-      this.search_active = {};
+      // Search gifs by term entered
+      this.resetInitValues();
       this.$vs.loading();
       await this.$axios
         .get(
@@ -111,9 +145,11 @@ export default {
           this.search = '';
         });
       this.$vs.loading.close();
-      setTimeout(() => {
-        this.empty_message = false;
-      }, 3000);
+    },
+    resetInitValues() {
+      this.slider_active = 0;
+      this.search_list = [];
+      this.search_active = {};
     }
   }
 };
@@ -133,5 +169,10 @@ export default {
 .empty__alert {
   max-width: 300px;
   min-height: 20px;
+}
+
+.slider__content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 </style>
